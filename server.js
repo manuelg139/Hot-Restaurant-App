@@ -27,16 +27,26 @@ app.get('/tables', (req, res) => res.sendFile(path.join(__dirname, 'tables.html'
 
 app.get('/reserve', (req, res) => res.sendFile(path.join(__dirname, 'reserve.html')));
 
-// Displays all characters
-app.get('/api/tables', (req, res) => res.json(tables));
-
 // Displays a single character, or returns false
-app.get('/api/tables/:tables', (req, res) => {
+app.get('/api/tables', (req, res) => {
   const chosen = req.params.tables;
 
   console.log(chosen);
 
-  
+  for (let i = 0; i < tables.length; i++) {
+    if (chosen === tables[i].routeName) {
+      return res.json(tables[i]);
+    }
+  }
+
+  return res.json(false);
+});
+
+// Displays a single character, or returns false
+app.get('/api/waitlist', (req, res) => {
+  const chosen = req.params.tables;
+
+  console.log(chosen);
 
   for (let i = 0; i < tables.length; i++) {
     if (chosen === tables[i].routeName) {
@@ -49,6 +59,19 @@ app.get('/api/tables/:tables', (req, res) => {
 
 // Create New Characters - takes in JSON input
 app.post('/api/tables', (req, res) => {
+  // req.body hosts is equal to the JSON post sent from the user
+
+  const newReservation = req.body;
+
+  
+  newReservation.routeName = newReservation.name.replace(/\s+/g, '').toLowerCase();
+  console.log(newReservation);
+
+  tables.push(newReservation);
+  res.json(newReservation);
+});
+
+app.post('/api/waitlist', (req, res) => {
   // req.body hosts is equal to the JSON post sent from the user
 
   const newReservation = req.body;
