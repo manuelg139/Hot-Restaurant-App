@@ -1,121 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <!-- font awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet">
-
+    <meta charset="UTF-8" />
     <title>Hot Restaurant</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
   </head>
+
   <body>
     <div class="container">
-        <div class="jumbotron">
-            <h1 class="display-4"><i class="fas fa-fire"></i> Hot Restaurant</h1>
-            <hr>
-            <h3 class="lead">Get your seat before they're all gone.</h3>
-            <button class="btn btn-danger btn-lg viewTablesBtn">
-              <i class="fas fa-binoculars"></i>View Tables
-            </button>
-            <button class="btn btn-danger btn-lg">
-                <i class="fas fa-calendar-week"></i> Make a Reservation
-            </button>
-          </div>
-          
-          <div class="row">
-            <div class="col-12">
-              <div class="card mb-4">
-                <div class="card-header">
-                  <h3><strong>Character Search</strong></h3>
-                </div>
-                <div class="card-body">
-                  <input type="text" id="character-search" class="form-control" />
-                  <br />
-                  <div class="text-right">
-                    <button
-                      type="submit"
-                      class="btn btn-primary btn-md"
-                      id="search-btn">
-                      <span class="fa fa-search"></span> Search Your Feelings. You
-                      know it is true.
-                    </button>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="card">
-                <div class="card-header">
-                  <h3><strong>Character Statistics</strong></h3>
-                </div>
-                <div class="card-body">
-                  <h2 id="name">Yoda</h2>
-                  <div id="stats" style="display: none;">
-                    <h3>
-                      <strong>Role:</strong> <span id="role">Jedi Master</span>
-                    </h3>
-                    <h3><strong>Age:</strong> <span id="age">900</span></h3>
-                    <h3>
-                      <strong>Force Points:</strong>
-                      <span id="force-points">2000</span>
-                    </h3>
-                  </div>
-                </div>
+      <div class="jumbotron">
+        <h1 class="display-4"><i class="fas fa-fire"></i> Hot Restaurant</h1>
+        <h3 class="lead">Get your seat before they're all gone.</h3>
+        <hr>
+        <a href="/add">
+          <button class="btn btn-danger btn-lg">
+            <i class="fas fa-binoculars"></i>View Tables
+          </button>
+        </a>
+        <a href="/api/characters">
+          <button class="btn btn-danger btn-lg">
+            <i class="fas fa-calendar-week"></i> Make a Reservation
+          </button>
+        </a>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h3><strong>Table Search</strong></h3>
+            </div>
+            <div class="card-body">
+              <input type="text" id="character-search" class="form-control" />
+              <br />
+              <div class="text-right">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-md"
+                  id="search-btn">
+                  <i class="fa fa-search"></i> Search table reservations.
+                </button>
               </div>
             </div>
           </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3><strong>Active reservations</strong></h3>
+            </div>
+            <div class="card-body">
+            </div>
+          </div>
         </div>
-    
-        <script type="text/javascript">
-          const searchBtn = document.getElementById('search-btn');
-          const statsEl = document.getElementById('stats');
-          const nameEl = document.getElementById('name');
-          const roleEl = document.getElementById('role');
-          const ageEl = document.getElementById('age');
-          const fpEl = document.getElementById('force-points');
-    
-          searchBtn.addEventListener('click', () => {
-            let searchedCharacter = document
-              .getElementById('character-search')
-              .value.trim();
-    
-            // Using a RegEx Pattern to remove spaces from searchedCharacter
-            // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-            searchedCharacter = searchedCharacter.replace(/\s+/g, '').toLowerCase();
-    
-            fetch(`/api/characters/${searchedCharacter}`, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log(data);
-                const { name, role, age, forcePoints } = data;
-    
-                if (data) {
-                  statsEl.setAttribute('style', 'display: inline');
-                  nameEl.textContent = name;
-                  roleEl.textContent = role;
-                  ageEl.textContent = age;
-                  fpEl.textContent = forcePoints;
-                } else {
-                  nameEl.textContent =
-                    'The force is not strong with this one. Your character was not found.';
-                    statsEl.setAttribute('style', 'display: none');
-                }
-              })
-              .catch((error) => {
-                console.error(error);
-              });
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      const searchBtn = document.getElementById('search-btn');
+      const statsEl = document.getElementById('stats');
+      const nameEl = document.getElementById('name');
+      const roleEl = document.getElementById('role');
+      const ageEl = document.getElementById('age');
+      const fpEl = document.getElementById('force-points');
+
+      searchBtn.addEventListener('click', () => {
+        let searchedCharacter = document
+          .getElementById('character-search')
+          .value.trim();
+
+        // Using a RegEx Pattern to remove spaces from searchedCharacter
+        // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+        searchedCharacter = searchedCharacter.replace(/\s+/g, '').toLowerCase();
+
+        fetch(`/api/characters/${searchedCharacter}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            const { name, role, age, forcePoints } = data;
+
+            if (data) {
+              statsEl.setAttribute('style', 'display: inline');
+              nameEl.textContent = name;
+              roleEl.textContent = role;
+              ageEl.textContent = age;
+              fpEl.textContent = forcePoints;
+            } else {
+              nameEl.textContent =
+                'The force is not strong with this one. Your character was not found.';
+                statsEl.setAttribute('style', 'display: none');
+            }
+          })
+          .catch((error) => {
+            console.error(error);
           });
-        </script>
-      </body>
-    </html>
+      });
+    </script>
+  </body>
+</html>
