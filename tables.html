@@ -10,6 +10,7 @@
 
   <body>
     <div class="container">
+
       <div class="jumbotron" style="text-align: center;">
         <h1 class="display-4"><i class="fas fa-fire"></i> Hot Restaurant</h1>
         <h3 class="lead">Get your seat before they're all gone.</h3>
@@ -37,23 +38,10 @@
     </div>
 
     <script type="text/javascript">
-      const searchBtn = document.getElementById('search-btn');
-      const statsEl = document.getElementById('stats');
-      const nameEl = document.getElementById('name');
-      const roleEl = document.getElementById('role');
-      const ageEl = document.getElementById('age');
-      const fpEl = document.getElementById('force-points');
-
-      searchBtn.addEventListener('click', () => {
-        let searchedCharacter = document
-          .getElementById('character-search')
-          .value.trim();
-
-        // Using a RegEx Pattern to remove spaces from searchedCharacter
-        // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-        searchedCharacter = searchedCharacter.replace(/\s+/g, '').toLowerCase();
-
-        fetch(`/api/characters/${searchedCharacter}`, {
+      const tableListEl = document.getElementById('tableList');
+    
+      function runTableQuery(){
+        fetch(`/api/tables/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -62,24 +50,41 @@
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            const { name, role, age, forcePoints } = data;
+         
+            const { name, email, phoneNumber, uniqueId } = data;
 
             if (data) {
-              statsEl.setAttribute('style', 'display: inline');
+              for (var i = 0; i < tables.length; i++ ){
+              let tableList = tableListEl;
+
+              let tableNumber = document.createElement('h1');
+              tableNumber.textContent("Table #" + (i + 1));
+              let listItem = document.createElement('li');
+              listItem.className('list-group-item mt-4');
+              let nameEl = document.createElement('h2');
               nameEl.textContent = name;
-              roleEl.textContent = role;
-              ageEl.textContent = age;
-              fpEl.textContent = forcePoints;
-            } else {
-              nameEl.textContent =
-                'The force is not strong with this one. Your character was not found.';
-                statsEl.setAttribute('style', 'display: none');
-            }
+              let emailEl = document.createElement('h2');
+              emailEl.textContent = email;
+              let phoneNumberEl = document.createElement('h2');
+              phoneNumberEl.textContent = phoneNumber;
+              let uniqueIdEl = document.createElement('h2');
+              uniqueIdEl.textContent = uniqueId;
+
+              listItem.appendChild(tableNumber);
+              listItem.appendchild(nameEl);
+              listItem.appendchild(emailEl);
+              listItem.appendchild(phoneNumberEl);
+              listItem.appendchild(uniqueIdEl);
+              tableList.append(listItem);
+            }} 
           })
           .catch((error) => {
             console.error(error);
           });
-      });
+      }; 
+
+  
+        runTableQuery()
     </script>
   </body>
 </html>
