@@ -14,12 +14,12 @@
         <h1 class="display-4"><i class="fas fa-fire"></i> Hot Restaurant</h1>
         <h3 class="lead">Get your seat before they're all gone.</h3>
         <hr>
-        <a href="/add">
+        <a href="/tables">
           <button class="btn btn-danger btn-lg">
             <i class="fas fa-binoculars"></i>View Tables
           </button>
         </a>
-        <a href="/api/characters">
+        <a href="/reserve">
           <button class="btn btn-danger btn-lg">
             <i class="fas fa-calendar-week"></i> Make a Reservation
           </button>
@@ -27,27 +27,12 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header">
-              <h3><strong>Table Search</strong></h3>
-            </div>
-            <div class="card-body">
-              <input type="text" id="character-search" class="form-control" />
-              <br />
-              <div class="text-right">
-                <button
-                  type="submit"
-                  class="btn btn-primary btn-md"
-                  id="search-btn">
-                  <i class="fa fa-search"></i> Search table reservations.
-                </button>
-              </div>
-            </div>
-          </div>
-
           <div class="card">
             <div class="card-header">
-              <h3><strong>Active reservations</strong></h3>
+              <h3><strong>Active Reservations</strong></h3>
+              <br>
+              <ul id="tableList" class="list-group">
+              </ul>
             </div>
             <div class="card-body">
             </div>
