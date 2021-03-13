@@ -14,12 +14,10 @@ app.use(express.json());
 
 //Hot Restaurant Table (DATA)
 
-const tables = [
-  
-];
-const waitlist = [
-  
-];
+
+const tables = [];
+const waitlist = [];
+
 
 // Routes
 
@@ -54,10 +52,6 @@ app.post('/api/tables', (req, res) => {
 
   const newReservation = req.body;
 
-  
-  newReservation.routeName = newReservation.name.replace(/\s+/g, '').toLowerCase();
-  console.log(newReservation);
-
   tables.push(newReservation);
   res.json(newReservation);
 });
@@ -65,14 +59,10 @@ app.post('/api/tables', (req, res) => {
 app.post('/api/waitlist', (req, res) => {
   // req.body hosts is equal to the JSON post sent from the user
 
-  const newReservation = req.body;
+  const newWaitlist = req.body;
 
-  
-  newReservation.routeName = newReservation.name.replace(/\s+/g, '').toLowerCase();
-  console.log(newReservation);
-
-  tables.push(newReservation);
-  res.json(newReservation);
+  waitlist.push(newWaitlist);
+  res.json(newWaitlist);
 });
 
 // Starts the server to begin listening
