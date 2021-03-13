@@ -56,49 +56,68 @@
     </div>
 
     <script type="text/javascript">
-      const searchBtn = document.getElementById('search-btn');
-      const statsEl = document.getElementById('stats');
-      const nameEl = document.getElementById('name');
-      const roleEl = document.getElementById('role');
-      const ageEl = document.getElementById('age');
-      const fpEl = document.getElementById('force-points');
+    
+    const addBtn = document.getElementById('add-btn');
+      
+      // Question: What is "e" short for?
+      addBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Question: What does this code do?
 
-      searchBtn.addEventListener('click', () => {
-        let searchedCharacter = document
-          .getElementById('character-search')
-          .value.trim();
+        let nameEl = document.getElementById('name').value.trim();
+        let emailEl = document.getElementById('email').value.trim();
+        let phoneNumberEl = document.getElementById('phoneNumber').value.trim();
+        let uniqueIdEl = document.getElementById('uniqueId').value.trim();
+        
+        let newTable = {
+          name: nameEl,
+          phoneNumber: phoneNumberEl,
+          email: emailEl,
+          uniqueId: uniqueIdEl,
+        };
 
-        // Using a RegEx Pattern to remove spaces from searchedCharacter
-        // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-        searchedCharacter = searchedCharacter.replace(/\s+/g, '').toLowerCase();
-
-        fetch(`/api/characters/${searchedCharacter}`, {
-          method: 'GET',
+        // Question: What does this code do??
+        fetch('/api/tables', {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify(newTable),
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
-            const { name, role, age, forcePoints } = data;
-
-            if (data) {
-              statsEl.setAttribute('style', 'display: inline');
-              nameEl.textContent = name;
-              roleEl.textContent = role;
-              ageEl.textContent = age;
-              fpEl.textContent = forcePoints;
-            } else {
-              nameEl.textContent =
-                'The force is not strong with this one. Your character was not found.';
-                statsEl.setAttribute('style', 'display: none');
-            }
+            console.log('./tables.html', data);
+            alert(`Adding ${data.name} to the Reservations!`);
           })
           .catch((error) => {
-            console.error(error);
+            console.error('Error:', error);
           });
+          
+
+     /*  fetch('/api/waitlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newTable),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('./tables.html', data);
+            alert(`Adding table to waitinglist: ${data.name}`);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+ */
+
+
       });
+
+
+
+
     </script>
   </body>
 </html>
