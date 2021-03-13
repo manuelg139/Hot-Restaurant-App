@@ -14,8 +14,10 @@ app.use(express.json());
 
 //Hot Restaurant Table (DATA)
 
+
 const tables = [];
 const waitlist = [];
+
 
 // Routes
 
@@ -26,37 +28,25 @@ app.get('/tables', (req, res) => res.sendFile(path.join(__dirname, 'tables.html'
 
 app.get('/reserve', (req, res) => res.sendFile(path.join(__dirname, 'reserve.html')));
 
-// Displays a single character, or returns false
-app.get('/api/tables', (req, res) => {
-  const chosen = req.params.tables;
+// Displays tables on list
+// app.get('/api/tables', (req, res) => {
+//   const chosen = req.params.tables;
 
-  console.log(chosen);
+//   console.log(chosen);
 
-  for (let i = 0; i < tables.length; i++) {
-    if (chosen === tables[i].routeName) {
-      return res.json(tables[i]);
-    }
-  }
+//   for (let i = 0; i < tables.length; i++) {
+//     if (chosen === tables[i].routeName) {
+//       return res.json(tables[i]);
+//     }
+//   }
 
-  return res.json(false);
-});
+//   return res.json(false);
+// });
+app.get('/api/tables', (req, res) => res.json(tables));
+app.get('/api/waitlist', (req, res) => res.json(waitlist));
 
-// Displays a single character, or returns false
-app.get('/api/waitlist', (req, res) => {
-  const chosen = req.params.tables;
 
-  console.log(chosen);
-
-  for (let i = 0; i < tables.length; i++) {
-    if (chosen === tables[i].routeName) {
-      return res.json(tables[i]);
-    }
-  }
-
-  return res.json(false);
-});
-
-// Create New Characters - takes in JSON input
+// Create New tables - takes in JSON input
 app.post('/api/tables', (req, res) => {
   // req.body hosts is equal to the JSON post sent from the user
 
